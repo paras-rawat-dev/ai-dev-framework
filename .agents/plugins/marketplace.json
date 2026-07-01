@@ -1,0 +1,22 @@
+{
+  "name": "ai-dev-framework",
+  "interface": {
+    "displayName": "AI Dev Framework"
+  },
+  "plugins": [
+    {
+      "name": "ai-dev-framework",
+      "source": {
+        "source": "url",
+        "url": "https://github.com/paras-rawat-dev/ai-dev-framework.git",
+        "ref": "main"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
+    }
+  ]
+}
+

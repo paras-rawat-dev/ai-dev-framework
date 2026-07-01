@@ -1,0 +1,30 @@
+{
+  "name": "ai-dev-framework",
+  "version": "0.1.0",
+  "description": "AI-assisted development framework for enterprise, project, and personal coding-agent standards.",
+  "author": {
+    "name": "Paras Rawat",
+    "url": "https://github.com/paras-rawat-dev"
+  },
+  "homepage": "https://github.com/paras-rawat-dev/ai-dev-framework",
+  "repository": "https://github.com/paras-rawat-dev/ai-dev-framework",
+  "license": "MIT",
+  "keywords": ["codex", "ai-assisted-development", "standards", "workflow", "agents"],
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "AI Dev Framework",
+    "shortDescription": "Enterprise/project/personal workflow for AI-assisted coding",
+    "longDescription": "Guides coding agents to create project charters, choose stack packs and UI members, push back on bad assumptions, use Ponytail-style restraint, and verify non-trivial changes.",
+    "developerName": "Paras Rawat",
+    "category": "Productivity",
+    "capabilities": ["Instructions", "Skills"],
+    "websiteURL": "https://github.com/paras-rawat-dev/ai-dev-framework",
+    "defaultPrompt": [
+      "Use the AI development framework for this project.",
+      "Create project instructions from this repository.",
+      "Review this change against the AI development framework."
+    ],
+    "brandColor": "#1f6feb"
+  }
+}
+
