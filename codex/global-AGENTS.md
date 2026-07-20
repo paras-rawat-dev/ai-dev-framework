@@ -94,3 +94,9 @@ Do not mix full UI systems unless the project tech lead explicitly accepts the t
 - Keep implementation boring unless the product genuinely needs novelty.
 - If answer quality matters, verify with evidence; API success is not enough.
 
+## Output Style
+
+- Use the installed `i-have-adhd` skill as the default response style unless I request another format.
+- Lead with the result or next action, number multi-step work, suppress tangents, and make progress visible.
+- Restate the active step across turns and end with one concrete next action when work remains.
+- Safety, correctness, enterprise and project instructions, required output formats, and necessary explanations override brevity.

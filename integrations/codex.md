@@ -53,7 +53,7 @@ Run from this framework repo:
 python3 scripts/install_codex_framework.py
 ```
 
-This installs global defaults, the `ai-dev-framework` skill, custom agents, and attempts Ponytail setup. See [docs/codex-default-setup.md](../docs/codex-default-setup.md).
+This installs global defaults, the `ai-dev-framework` skill, custom agents, Ponytail, and the `i-have-adhd` output-style plugin. See [docs/codex-default-setup.md](../docs/codex-default-setup.md).
 
 ## Project Bootstrap
 

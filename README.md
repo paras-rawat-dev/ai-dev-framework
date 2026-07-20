@@ -88,7 +88,7 @@ codex plugin marketplace add paras-rawat-dev/ai-dev-framework
 codex plugin add ai-dev-framework@ai-dev-framework
 ```
 
-The plugin exposes the `ai-dev-framework` skill. The local setup script additionally installs global defaults and custom agents.
+The plugin exposes the `ai-dev-framework` skill. The local setup script additionally installs global defaults, custom agents, Ponytail, and the `i-have-adhd` output-style plugin.
 
 ## Core Rule
 
