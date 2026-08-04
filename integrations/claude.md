@@ -43,7 +43,18 @@ Use:
 ~/.claude/CLAUDE.md
 ```
 
-Personal instructions should cover how you want Claude to collaborate.
+Start from [claude/global-CLAUDE.md](../claude/global-CLAUDE.md). If `~/.claude/CLAUDE.md` already exists, merge the framework defaults into it instead of overwriting personal instructions.
+
+Install the reusable framework skill for all local Claude Code projects:
+
+```bash
+mkdir -p ~/.claude/skills
+ln -s "$(pwd)/skills/ai-dev-framework" ~/.claude/skills/ai-dev-framework
+```
+
+Run the command from the framework repository. If the destination already exists, update it deliberately rather than replacing it blindly.
+
+Personal instructions should cover how you want Claude to collaborate. They cannot weaken enterprise or project requirements.
 
 ## Suggested Project `CLAUDE.md`
 
