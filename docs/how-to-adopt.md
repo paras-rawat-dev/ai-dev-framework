@@ -30,6 +30,8 @@ Every new project should create:
 
 Do this before major implementation starts.
 
+Each developer should also run the agent-specific setup command from [required companion plugins](companion-plugins.md). This installs the framework, Ponytail, `i-have-adhd`, and the host's reviewed UI capability pack where one exists.
+
 ## Pass 4: Keep The Loop Alive
 
 Review the guidance after real misses:
@@ -47,7 +49,7 @@ Update the narrowest file that would have prevented the miss.
 For Codex users who want this to become default behavior, run:
 
 ```bash
-python3 scripts/install_codex_framework.py
+python3 scripts/install_framework.py --agent codex
 ```
 
-That installs global defaults and the reusable framework skill. Project teams should still create project-level docs so the defaults have concrete facts to apply.
+That installs global defaults, the reusable framework skill, required companions, and the Codex UI capability pack. Project teams should still create project-level docs so the defaults have concrete facts to apply.

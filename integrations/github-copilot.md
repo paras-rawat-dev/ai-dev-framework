@@ -7,6 +7,7 @@ Official docs:
 - https://docs.github.com/en/copilot/how-tos/copilot-cli/customize-copilot/add-custom-instructions
 - https://docs.github.com/en/copilot/reference/custom-instructions-support
 - https://docs.github.com/en/copilot/how-tos/copilot-on-github/customize-copilot/add-custom-instructions/add-organization-instructions
+- https://docs.github.com/en/copilot/how-tos/copilot-on-github/customize-copilot/customize-cloud-agent/add-skills
 
 ## Enterprise Level
 
@@ -57,6 +58,29 @@ $HOME/.copilot/copilot-instructions.md
 ```
 
 Personal instructions should tune style, not weaken project rules.
+
+## Automatic Setup
+
+Install GitHub CLI 2.90.0 or later, then run from this framework repository:
+
+```bash
+python3 scripts/install_framework.py --agent github-copilot
+```
+
+This merges the personal Copilot CLI instructions, installs the framework skill, and installs the reviewed Ponytail and `i-have-adhd` Agent Skills at user scope. Ponytail's full skill set is installed; ADHD behavior is also embedded in personal and generated project instructions because the third-party skill is opt-in by design.
+
+User-scope skills are local-machine defaults. For GitHub-hosted coding agents, install the same pinned skills into the repository and commit `.agents/skills`:
+
+```bash
+python3 /path/to/ai-dev-framework/scripts/install_framework.py \
+  --agent github-copilot \
+  --scope project \
+  --target .
+```
+
+Copilot has no required cross-surface UI plugin in this profile. Use the framework's UI selection guidance and project-owned browser tests rather than claiming Codex or Claude UI plugins are portable.
+
+See [required companion plugins](../docs/companion-plugins.md) for the compatibility matrix.
 
 ## Important Notes
 

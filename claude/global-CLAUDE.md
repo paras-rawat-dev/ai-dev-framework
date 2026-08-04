@@ -18,6 +18,13 @@ Apply instructions in this order:
 - Apply Ponytail-style restraint: inspect the affected flow, then prefer no code, existing code, standard library, native features, installed dependencies, and the smallest correct implementation.
 - Do not simplify away security, data handling, accessibility, root-cause analysis, or required checks.
 
+## Required Companion Plugins
+
+- Use the Ponytail plugin for coding tasks after reading and tracing the affected flow.
+- Keep `i-have-adhd` active by default unless I request another response style.
+- For UI work, use Frontend Design for implementation guidance and Playwright for browser verification when those plugins are installed and relevant.
+- If a required companion is unavailable, state which capability is missing and continue with the safest native fallback instead of pretending the plugin ran.
+
 ## New Projects
 
 Before major implementation, establish only the missing project facts:

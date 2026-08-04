@@ -16,10 +16,16 @@ PROJECT_FILES = {
     "AI_WORKFLOW.md": ROOT / "projects" / "TEMPLATE.ai-workflow.md",
 }
 
+TOOL_FILES = {
+    "CLAUDE.md": ROOT / "claude" / "project-CLAUDE.md",
+    ".github/copilot-instructions.md": ROOT / "copilot" / "project-copilot-instructions.md",
+}
+
 
 def write_if_missing(src: Path, dst: Path, force: bool) -> str:
     if dst.exists() and not force:
         return f"kept {dst}"
+    dst.parent.mkdir(parents=True, exist_ok=True)
     shutil.copy2(src, dst)
     return f"wrote {dst}"
 
@@ -36,11 +42,15 @@ def main() -> int:
     for name, src in PROJECT_FILES.items():
         print(write_if_missing(src, target / name, args.force))
 
+    for name, src in TOOL_FILES.items():
+        print(write_if_missing(src, target / name, args.force))
+
     agents = target / "AGENTS.md"
     if not agents.exists() or args.force:
         agents.write_text(
             "# Project Agent Instructions\n\n"
             "Read PROJECT_CHARTER.md, ARCHITECTURE.md, TESTING.md, and AI_WORKFLOW.md before non-trivial changes.\n\n"
+            "Use the installed ai-dev-framework, Ponytail, and i-have-adhd companions. Report a missing companion instead of pretending it ran.\n\n"
             "Follow selected stack packs and UI member choices from PROJECT_CHARTER.md.\n"
             "Challenge scope creep, unnecessary dependencies, missing verification, and UI-library drift.\n",
             encoding="utf-8",
@@ -55,4 +65,3 @@ def main() -> int:
 
 if __name__ == "__main__":
     raise SystemExit(main())
-

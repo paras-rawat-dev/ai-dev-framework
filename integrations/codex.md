@@ -50,10 +50,10 @@ Personal guidance should tune collaboration style, not override project rules.
 Run from this framework repo:
 
 ```bash
-python3 scripts/install_codex_framework.py
+python3 scripts/install_framework.py --agent codex
 ```
 
-This installs global defaults, the `ai-dev-framework` skill, custom agents, Ponytail, and the `i-have-adhd` output-style plugin. See [docs/codex-default-setup.md](../docs/codex-default-setup.md).
+This installs global defaults, the `ai-dev-framework` skill, custom agents, Ponytail and `i-have-adhd` through framework-managed pinned marketplaces, and the Browser, Visualize, and Sites UI capability plugins. See [docs/codex-default-setup.md](../docs/codex-default-setup.md) and [required companion plugins](../docs/companion-plugins.md).
 
 ## Project Bootstrap
 

@@ -19,6 +19,12 @@ Use the framework repo as the source of truth. Default location:
 
 If that path does not exist, use the checked-in framework files in the current repository.
 
+## Companion Preflight
+
+When asked to install, adopt, or configure this framework, read `profiles/default.json` and run the matching `scripts/install_framework.py --agent <agent>` command. Setup is incomplete if a required companion fails to install.
+
+Do not reinstall companions on every coding task. If Ponytail, `i-have-adhd`, or the host's mapped UI capability pack is missing, state the gap and use the safest native fallback until setup is repaired. Agent Skills are portable; native plugin hooks and tools are not.
+
 ## Core Model
 
 Apply three levels:
@@ -85,4 +91,3 @@ Read only when needed:
 - `references/existing-project.md` for onboarding an existing repo.
 - `references/ui-selection.md` for UI library choices.
 - `references/personal-style.md` for the user's preferred agent behavior.
-

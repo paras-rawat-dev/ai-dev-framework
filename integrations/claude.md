@@ -56,6 +56,18 @@ Run the command from the framework repository. If the destination already exists
 
 Personal instructions should cover how you want Claude to collaborate. They cannot weaken enterprise or project requirements.
 
+## Automatic Setup
+
+Run from this framework repository:
+
+```bash
+python3 scripts/install_framework.py --agent claude
+```
+
+This safely merges the global Claude defaults, installs the framework skill, installs pinned Ponytail and `i-have-adhd` plugins, enables the ADHD SessionStart behavior, and installs Frontend Design and Playwright from Claude's official marketplace.
+
+See [required companion plugins](../docs/companion-plugins.md) for reviewed revisions and UI-tool boundaries.
+
 ## Suggested Project `CLAUDE.md`
 
 ```md

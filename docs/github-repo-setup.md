@@ -1,6 +1,6 @@
 # GitHub Repository Setup
 
-This repo is meant to be shared as a setup guide and optional Codex plugin marketplace.
+This repo is meant to be shared as a setup guide and optional agent plugin marketplace.
 
 ## Install From GitHub In Codex
 
@@ -13,13 +13,19 @@ codex plugin add ai-dev-framework@ai-dev-framework
 
 Then start a new Codex thread.
 
-## Manual Setup Without Plugin Install
+This installs only the framework plugin. It does not complete the required companion profile.
 
-Clone the repo and run:
+## Complete Host Setup
+
+Clone the repo and run the command for the host being configured:
 
 ```bash
-python3 scripts/install_codex_framework.py
+python3 scripts/install_framework.py --agent codex
+python3 scripts/install_framework.py --agent claude
+python3 scripts/install_framework.py --agent github-copilot
 ```
+
+The command installs the framework, Ponytail, `i-have-adhd`, and the reviewed UI capability pack available for that host. Treat a failed required companion as an incomplete setup.
 
 ## Start A New Project
 
@@ -43,4 +49,3 @@ Use:
 
 - [integrations/claude.md](../integrations/claude.md)
 - [integrations/github-copilot.md](../integrations/github-copilot.md)
-

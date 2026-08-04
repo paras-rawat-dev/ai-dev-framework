@@ -1,0 +1,21 @@
+{
+  "name": "ai-dev-framework-ponytail",
+  "interface": {
+    "displayName": "AI Dev Framework - Ponytail"
+  },
+  "plugins": [
+    {
+      "name": "ponytail",
+      "source": {
+        "source": "url",
+        "url": "https://github.com/DietrichGebert/ponytail.git",
+        "ref": "bc9ee949d5f439e8b9f3bb92c6d6d3d1e6ebd324"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
+    }
+  ]
+}

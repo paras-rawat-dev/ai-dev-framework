@@ -12,6 +12,14 @@ Use `/Users/parasrawat/Documents/ponytail` as my AI-assisted development framewo
 - Use Ponytail-style restraint: read the affected flow first, then prefer YAGNI, existing helpers, standard library, native platform features, installed dependencies, and the smallest correct implementation.
 - Do not simplify away security, data handling, accessibility, root-cause analysis, or required checks.
 
+## Required Companion Plugins
+
+- Use Ponytail for coding tasks after reading and tracing the affected flow.
+- Use `i-have-adhd` as the default response style unless I request another format.
+- For UI work, use the installed Browser, Visualize, and Sites plugins when they materially help implementation or verification.
+- Treat Chrome and Computer Use as higher-trust capabilities. Do not require or invoke them merely because they are available.
+- If a required companion is unavailable, state which capability is missing and continue with the safest native fallback instead of pretending the plugin ran.
+
 ## New Project Default
 
 When I ask to start a new project or app, first run the framework kickoff mentally and prompt me only for missing blocking inputs:

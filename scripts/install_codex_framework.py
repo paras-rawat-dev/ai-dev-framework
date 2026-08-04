@@ -10,13 +10,12 @@ from pathlib import Path
 
 
 ROOT = Path(__file__).resolve().parents[1]
-HOME = Path.home()
 CODEX_HOME = Path.home() / ".codex"
 AGENTS_HOME = Path.home() / ".agents"
-I_HAVE_ADHD_REPOSITORY = "https://github.com/ayghri/i-have-adhd.git"
-I_HAVE_ADHD_REF = "main"
-I_HAVE_ADHD_VERSION = "0.1.0"
-I_HAVE_ADHD_REVIEWED_REVISION = "72c33eee81ea439cf01991e93729adfce2ffc99e"
+PROFILE = json.loads((ROOT / "profiles" / "default.json").read_text(encoding="utf-8"))
+PONYTAIL = PROFILE["companions"]["ponytail"]
+I_HAVE_ADHD = PROFILE["companions"]["i-have-adhd"]
+CODEX_UI_PLUGINS = PROFILE["uiPlugins"]["codex"]
 
 
 def backup(path: Path) -> None:
@@ -88,10 +87,8 @@ def ensure_config() -> None:
         print(f"kept {config}")
 
 
-def install_plugin(marketplace: str, plugin: str, label: str, ref: str | None = None) -> bool:
+def install_plugin(marketplace: str, plugin: str, label: str) -> bool:
     marketplace_cmd = ["codex", "plugin", "marketplace", "add", marketplace]
-    if ref:
-        marketplace_cmd.extend(["--ref", ref])
     marketplace_code, marketplace_out = run(marketplace_cmd)
     if marketplace_out:
         print(marketplace_out)
@@ -113,7 +110,7 @@ def install_plugin(marketplace: str, plugin: str, label: str, ref: str | None = 
 
 
 def install_ponytail() -> bool:
-    return install_plugin("DietrichGebert/ponytail", "ponytail@ponytail", "Ponytail")
+    return install_pinned_plugin(PONYTAIL, "Ponytail")
 
 
 def git_revision(cmd: list[str]) -> str | None:
@@ -124,53 +121,105 @@ def git_revision(cmd: list[str]) -> str | None:
 
 
 def install_i_have_adhd() -> bool:
-    remote_revision = git_revision(
-        ["git", "ls-remote", I_HAVE_ADHD_REPOSITORY, f"refs/heads/{I_HAVE_ADHD_REF}"]
+    return install_pinned_plugin(I_HAVE_ADHD, "i-have-adhd")
+
+
+def installed_plugin_revision(companion: dict[str, object]) -> str | None:
+    marketplace = str(companion["codexMarketplace"])
+    version = str(companion["version"])
+    plugin_name = str(companion["codexPluginId"]).split("@", 1)[0]
+    plugin_root = CODEX_HOME / "plugins" / "cache" / marketplace / plugin_name / version
+    return git_revision(["git", "-C", str(plugin_root), "rev-parse", "HEAD"])
+
+
+def managed_marketplace_is_valid(companion: dict[str, object]) -> bool:
+    marketplace_root = ROOT / str(companion["codexMarketplacePath"])
+    manifest_path = marketplace_root / ".agents" / "plugins" / "marketplace.json"
+    try:
+        manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError):
+        return False
+    plugin_name = str(companion["codexPluginId"]).split("@", 1)[0]
+    plugin = next((item for item in manifest.get("plugins", []) if item.get("name") == plugin_name), None)
+    if plugin is None:
+        return False
+    source = plugin.get("source", {})
+    return (
+        manifest.get("name") == companion["codexMarketplace"]
+        and source.get("url") == companion["gitUrl"]
+        and source.get("ref") == companion["commit"]
     )
-    if remote_revision != I_HAVE_ADHD_REVIEWED_REVISION:
-        print(
-            "warning: i-have-adhd main no longer matches the reviewed revision; "
-            "review the upstream changes before updating the framework pin"
-        )
-        return False
 
-    if not install_plugin(
-        "ayghri/i-have-adhd",
-        "i-have-adhd@i-have-adhd",
-        "i-have-adhd",
-        ref=I_HAVE_ADHD_REF,
-    ):
-        return False
 
-    plugin_root = CODEX_HOME / "plugins" / "cache" / "i-have-adhd" / "i-have-adhd" / I_HAVE_ADHD_VERSION
-    installed_revision = git_revision(["git", "-C", str(plugin_root), "rev-parse", "HEAD"])
-    if installed_revision == I_HAVE_ADHD_REVIEWED_REVISION:
+def command_removed_or_absent(code: int, output: str) -> bool:
+    normalized = output.lower()
+    return (
+        code == 0
+        or "not installed" in normalized
+        or "not found" in normalized
+        or "not configured" in normalized
+    )
+
+
+def remove_plugin_and_marketplace(plugin_id: str, marketplace: str) -> bool:
+    plugin_code, plugin_output = run(["codex", "plugin", "remove", plugin_id])
+    if plugin_output and not command_removed_or_absent(plugin_code, plugin_output):
+        print(plugin_output)
+    marketplace_code, marketplace_output = run(
+        ["codex", "plugin", "marketplace", "remove", marketplace]
+    )
+    if marketplace_output and not command_removed_or_absent(marketplace_code, marketplace_output):
+        print(marketplace_output)
+    return command_removed_or_absent(plugin_code, plugin_output) and command_removed_or_absent(
+        marketplace_code, marketplace_output
+    )
+
+
+def install_pinned_plugin(companion: dict[str, object], label: str) -> bool:
+    marketplace_source = ROOT / str(companion["codexMarketplacePath"])
+    marketplace = str(companion["codexMarketplace"])
+    plugin_id = str(companion["codexPluginId"])
+    legacy_marketplace = str(companion["marketplace"])
+    legacy_plugin_id = str(companion["pluginId"])
+    expected_revision = str(companion["commit"])
+
+    if not managed_marketplace_is_valid(companion):
+        print(f"warning: local {label} marketplace does not match the reviewed profile")
+        return False
+    if not remove_plugin_and_marketplace(legacy_plugin_id, legacy_marketplace):
+        print(f"warning: could not remove the moving upstream {label} marketplace")
+        return False
+    if not remove_plugin_and_marketplace(plugin_id, marketplace):
+        print(f"warning: could not refresh the managed {label} marketplace")
+        return False
+    if not install_plugin(str(marketplace_source), plugin_id, label):
+        return False
+    if installed_plugin_revision(companion) == expected_revision:
         return True
 
-    print("warning: installed i-have-adhd revision was not the reviewed revision; removing it")
-    remove_code, remove_output = run(["codex", "plugin", "remove", "i-have-adhd@i-have-adhd"])
-    if remove_output:
-        print(remove_output)
-
-    list_code, list_output = run(["codex", "plugin", "list", "--json"])
-    try:
-        installed_plugins = json.loads(list_output).get("installed", []) if list_code == 0 else []
-    except json.JSONDecodeError:
-        installed_plugins = []
-        list_code = 1
-    still_enabled = any(
-        item.get("pluginId") == "i-have-adhd@i-have-adhd" and item.get("enabled", False)
-        for item in installed_plugins
-    )
-    if remove_code != 0 or list_code != 0 or still_enabled:
-        print("warning: could not confirm the unreviewed i-have-adhd plugin is disabled")
+    print(f"warning: installed {label} revision was not the reviewed revision; removing it")
+    if not remove_plugin_and_marketplace(plugin_id, marketplace):
+        print(f"warning: could not confirm the unreviewed {label} plugin is disabled")
     return False
+
+
+def install_ui_plugins() -> bool:
+    ok = True
+    for plugin in CODEX_UI_PLUGINS:
+        code, output = run(["codex", "plugin", "add", plugin])
+        if output:
+            print(output)
+        if code != 0 and "already" not in output.lower():
+            print(f"warning: could not install UI plugin {plugin}")
+            ok = False
+    return ok
 
 
 def main() -> int:
     parser = argparse.ArgumentParser(description="Install the AI development framework into local Codex defaults.")
     parser.add_argument("--skip-ponytail", action="store_true", help="Do not try to install the Ponytail Codex plugin.")
     parser.add_argument("--skip-i-have-adhd", action="store_true", help="Do not install the i-have-adhd output-style plugin.")
+    parser.add_argument("--skip-ui-plugins", action="store_true", help="Do not install the default Codex UI capability plugins.")
     args = parser.parse_args()
 
     install_global_agents()
@@ -183,6 +232,9 @@ def main() -> int:
             plugins_ok = False
     if not args.skip_i_have_adhd:
         if not install_i_have_adhd():
+            plugins_ok = False
+    if not args.skip_ui_plugins:
+        if not install_ui_plugins():
             plugins_ok = False
 
     if not plugins_ok:

@@ -1,0 +1,55 @@
+{
+  "schemaVersion": 1,
+  "reviewedAt": "2026-08-04",
+  "companions": {
+    "ponytail": {
+      "required": true,
+      "repository": "DietrichGebert/ponytail",
+      "gitUrl": "https://github.com/DietrichGebert/ponytail.git",
+      "ref": "v4.8.4",
+      "commit": "bc9ee949d5f439e8b9f3bb92c6d6d3d1e6ebd324",
+      "version": "4.8.4",
+      "marketplace": "ponytail",
+      "pluginId": "ponytail@ponytail",
+      "codexMarketplace": "ai-dev-framework-ponytail",
+      "codexPluginId": "ponytail@ai-dev-framework-ponytail",
+      "codexMarketplacePath": "companions/codex/ponytail",
+      "copilotSkills": [
+        "ponytail",
+        "ponytail-audit",
+        "ponytail-debt",
+        "ponytail-gain",
+        "ponytail-help",
+        "ponytail-review"
+      ]
+    },
+    "i-have-adhd": {
+      "required": true,
+      "repository": "ayghri/i-have-adhd",
+      "gitUrl": "https://github.com/ayghri/i-have-adhd.git",
+      "ref": "d05af1e4ac2259846e81686d14180d46d84acc2d",
+      "commit": "d05af1e4ac2259846e81686d14180d46d84acc2d",
+      "version": "0.1.0",
+      "marketplace": "i-have-adhd",
+      "pluginId": "i-have-adhd@i-have-adhd",
+      "codexMarketplace": "ai-dev-framework-i-have-adhd",
+      "codexPluginId": "i-have-adhd@ai-dev-framework-i-have-adhd",
+      "codexMarketplacePath": "companions/codex/i-have-adhd",
+      "copilotSkills": [
+        "i-have-adhd"
+      ]
+    }
+  },
+  "uiPlugins": {
+    "codex": [
+      "browser@openai-bundled",
+      "visualize@openai-bundled",
+      "sites@openai-bundled"
+    ],
+    "claude": [
+      "frontend-design@claude-plugins-official",
+      "playwright@claude-plugins-official"
+    ],
+    "github-copilot": []
+  }
+}

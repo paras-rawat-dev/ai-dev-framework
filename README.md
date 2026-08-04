@@ -21,11 +21,15 @@ The goal is not to make one giant prompt. The goal is to keep durable standards 
    - [Codex](integrations/codex.md)
    - [Claude Code](integrations/claude.md)
    - [GitHub Copilot](integrations/github-copilot.md)
-7. To make Codex use the framework by default, run:
+7. Install the framework and required companions for your coding agent:
 
 ```bash
-python3 scripts/install_codex_framework.py
+python3 scripts/install_framework.py --agent codex
+python3 scripts/install_framework.py --agent claude
+python3 scripts/install_framework.py --agent github-copilot
 ```
+
+Run only the command for the agent being configured. See [required companion plugins](docs/companion-plugins.md) for portability, reviewed pins, UI tooling, and skip controls.
 
 8. To bootstrap docs in a project, run:
 
@@ -47,6 +51,8 @@ stacks/       Tech-lead-owned stack packs such as Python/FastAPI or React/Vite.
 projects/     Templates created when a new repo or product starts.
 personal/     Personal instruction templates for individual working style.
 integrations/ How to install the same ideas in Codex, Claude, and Copilot.
+profiles/     Reviewed companion-plugin sources, revisions, and host mappings.
+companions/   Host-specific pinned marketplace overlays for third-party companions.
 checklists/   Reusable review, RCA, project kickoff, and UI-selection checklists.
 poc/          Tiny baseline-vs-framework proof of concept.
 tools/        Local scripts for validation and experiments.
@@ -71,12 +77,13 @@ The React UI stack pack includes these recommended members:
 
 Projects should pick one primary member and document the reason. Mixing full UI systems requires tech lead approval.
 
-## Codex Plugin / Marketplace
+## Agent Plugins And Skills
 
-This repo includes a Codex plugin manifest and marketplace metadata:
+This repo includes Codex and Claude plugin manifests plus a portable Agent Skill:
 
 ```text
 .codex-plugin/plugin.json
+.claude-plugin/plugin.json
 .agents/plugins/marketplace.json
 skills/ai-dev-framework/SKILL.md
 ```
@@ -88,7 +95,9 @@ codex plugin marketplace add paras-rawat-dev/ai-dev-framework
 codex plugin add ai-dev-framework@ai-dev-framework
 ```
 
-The plugin exposes the `ai-dev-framework` skill. The local setup script additionally installs global defaults, custom agents, Ponytail, and the `i-have-adhd` output-style plugin.
+Those two marketplace commands install only the framework plugin. Use the Quick Start host command to apply required companions and UI tooling.
+
+The framework skill is portable. Plugin packaging, hooks, browser tooling, and install commands remain agent-specific. The cross-agent setup script installs Ponytail and `i-have-adhd` by default and installs the reviewed UI capability pack available for the selected host.
 
 ## Core Rule
 

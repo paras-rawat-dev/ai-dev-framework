@@ -1,0 +1,17 @@
+{
+  "$schema": "https://www.schemastore.org/claude-code-marketplace.json",
+  "name": "ai-dev-framework",
+  "description": "AI-assisted development framework for consistent coding-agent behavior.",
+  "owner": {
+    "name": "Paras Rawat",
+    "url": "https://github.com/paras-rawat-dev"
+  },
+  "plugins": [
+    {
+      "name": "ai-dev-framework",
+      "description": "Enterprise, project, and personal workflow standards for AI-assisted software development.",
+      "source": "./",
+      "category": "productivity"
+    }
+  ]
+}

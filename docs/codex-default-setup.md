@@ -3,7 +3,7 @@
 Run from this repository:
 
 ```bash
-python3 scripts/install_codex_framework.py
+python3 scripts/install_framework.py --agent codex
 ```
 
 This installs:
@@ -12,10 +12,13 @@ This installs:
 - `~/.agents/skills/ai-dev-framework`
 - custom Codex agents in `~/.codex/agents/`
 - recommended `[agents]` config if missing
-- Ponytail plugin marketplace and plugin when the local `codex` CLI can install it
-- `i-have-adhd` plugin marketplace and plugin for action-first output
+- pinned framework-managed Ponytail marketplace and plugin
+- pinned framework-managed `i-have-adhd` marketplace and plugin for action-first output
+- Browser, Visualize, and Sites UI capability plugins
 
 The installer exits non-zero if a companion plugin cannot be installed, while keeping the framework files it installed successfully.
+
+Third-party companion revisions are pinned in [profiles/default.json](../profiles/default.json). Review upstream changes before moving a pin.
 
 Start a new Codex thread after installation.
 
@@ -35,19 +38,19 @@ Codex should now treat the framework as default behavior:
 Install manually:
 
 ```bash
-codex plugin marketplace add DietrichGebert/ponytail
-codex plugin add ponytail@ponytail
+codex plugin marketplace add /path/to/ai-dev-framework/companions/codex/ponytail
+codex plugin add ponytail@ai-dev-framework-ponytail
 ```
 
-Then open `/hooks` in Codex and trust Ponytail hooks if prompted.
+The managed marketplace points the plugin source at the reviewed commit in [profiles/default.json](../profiles/default.json). Then open `/hooks` in Codex and trust Ponytail hooks if prompted.
 
 ## If i-have-adhd Installation Fails
 
 Install manually:
 
 ```bash
-codex plugin marketplace add ayghri/i-have-adhd --ref main
-codex plugin add i-have-adhd@i-have-adhd
+codex plugin marketplace add /path/to/ai-dev-framework/companions/codex/i-have-adhd
+codex plugin add i-have-adhd@ai-dev-framework-i-have-adhd
 ```
 
-At the reviewed upstream revision (`72c33eee81ea439cf01991e93729adfce2ffc99e`, 2026-07-19), the plugin contains an instruction-only skill and does not require hook trust. Because the upstream marketplace tracks `main` and has no release tags, the installer verifies both upstream and installed revisions against that reviewed SHA. A changed revision fails installation; audit it before updating the pin.
+The installer verifies the plugin against the reviewed commit in [profiles/default.json](../profiles/default.json). The plugin includes a SessionStart hook; review it and follow Codex's trust prompt rather than bypassing hook approval. The global framework instructions still request ADHD-friendly output when the hook is unavailable.
