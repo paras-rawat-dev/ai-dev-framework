@@ -23,7 +23,11 @@ class BootstrapProjectTests(unittest.TestCase):
             self.assertTrue((target / ".github" / "copilot-instructions.md").exists())
             self.assertTrue((target / "PROJECT_CHARTER.md").exists())
             self.assertIn(
-                "Ponytail, and i-have-adhd",
+                "graphify-out/",
+                (target / ".gitignore").read_text(encoding="utf-8"),
+            )
+            self.assertIn(
+                "Ponytail, i-have-adhd, and Graphify",
                 (target / "AGENTS.md").read_text(encoding="utf-8"),
             )
 

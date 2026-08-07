@@ -94,6 +94,22 @@ def trees_equal(left: Path, right: Path) -> bool:
     return all(filecmp.cmp(left / path, right / path, shallow=False) for path in left_files)
 
 
+def ensure_gitignore_entry(path: Path, entry: str, dry_run: bool = False) -> None:
+    existing = path.read_text(encoding="utf-8") if path.exists() else ""
+    if entry in {line.strip() for line in existing.splitlines()}:
+        print(f"kept {path}")
+        return
+    if dry_run:
+        print(f"would add {entry} to {path}")
+        return
+    path.parent.mkdir(parents=True, exist_ok=True)
+    updated = existing.rstrip()
+    if updated:
+        updated += "\n"
+    path.write_text(updated + entry + "\n", encoding="utf-8")
+    print(f"updated {path}")
+
+
 def run_required(cmd: list[str], label: str, runner: Runner, dry_run: bool = False) -> bool:
     if dry_run:
         print(f"would run: {shlex.join(cmd)}")
@@ -105,6 +121,32 @@ def run_required(cmd: list[str], label: str, runner: Runner, dry_run: bool = Fal
         return True
     print(f"warning: could not install {label}")
     return False
+
+
+def install_graphify(
+    home: Path,
+    agent: str,
+    runner: Runner,
+    *,
+    scope: str = "user",
+    target: Path | None = None,
+    dry_run: bool = False,
+) -> bool:
+    cmd = [
+        sys.executable,
+        str(ROOT / "scripts" / "install_graphify.py"),
+        "--platform",
+        agent,
+        "--scope",
+        scope,
+        "--home",
+        str(home),
+    ]
+    if target is not None:
+        cmd.extend(["--target", str(target)])
+    if dry_run:
+        cmd.append("--dry-run")
+    return run_required(cmd, "Graphify", runner, dry_run)
 
 
 def prepare_claude_marketplace(
@@ -193,6 +235,7 @@ def install_claude(
     *,
     skip_ponytail: bool = False,
     skip_i_have_adhd: bool = False,
+    skip_graphify: bool = False,
     skip_ui_plugins: bool = False,
     dry_run: bool = False,
 ) -> bool:
@@ -208,6 +251,9 @@ def install_claude(
     )
 
     ok = True
+    if not skip_graphify:
+        ok &= install_graphify(home, "claude", runner, dry_run=dry_run)
+
     companions = PROFILE["companions"]
     selected: list[tuple[str, dict[str, object]]] = []
     if not skip_ponytail:
@@ -263,6 +309,7 @@ def install_copilot(
     target: Path | None = None,
     skip_ponytail: bool = False,
     skip_i_have_adhd: bool = False,
+    skip_graphify: bool = False,
     skip_ui_plugins: bool = False,
     dry_run: bool = False,
 ) -> bool:
@@ -298,8 +345,20 @@ def install_copilot(
         skill_destination / "ai-dev-framework",
         dry_run,
     )
+    if project_scope:
+        ensure_gitignore_entry(project_root / ".gitignore", "graphify-out/", dry_run)
 
     ok = True
+    if not skip_graphify:
+        ok &= install_graphify(
+            home,
+            "github-copilot",
+            runner,
+            scope=scope,
+            target=project_root if project_scope else None,
+            dry_run=dry_run,
+        )
+
     companions = PROFILE["companions"]
     selected = []
     if not skip_ponytail:
@@ -346,6 +405,8 @@ def install_codex(args: argparse.Namespace, dry_run: bool = False) -> bool:
         cmd.append("--skip-ponytail")
     if args.skip_i_have_adhd:
         cmd.append("--skip-i-have-adhd")
+    if args.skip_graphify:
+        cmd.append("--skip-graphify")
     if args.skip_ui_plugins:
         cmd.append("--skip-ui-plugins")
     if dry_run:
@@ -359,6 +420,7 @@ def main() -> int:
     parser.add_argument("--agent", required=True, choices=["codex", "claude", "github-copilot"])
     parser.add_argument("--skip-ponytail", action="store_true")
     parser.add_argument("--skip-i-have-adhd", action="store_true")
+    parser.add_argument("--skip-graphify", action="store_true")
     parser.add_argument("--skip-ui-plugins", action="store_true")
     parser.add_argument("--scope", choices=["user", "project"], default="user")
     parser.add_argument("--target", type=Path, help="Project root for --scope project")
@@ -378,6 +440,7 @@ def main() -> int:
             home,
             skip_ponytail=args.skip_ponytail,
             skip_i_have_adhd=args.skip_i_have_adhd,
+            skip_graphify=args.skip_graphify,
             skip_ui_plugins=args.skip_ui_plugins,
             dry_run=args.dry_run,
         )
@@ -388,6 +451,7 @@ def main() -> int:
             target=args.target,
             skip_ponytail=args.skip_ponytail,
             skip_i_have_adhd=args.skip_i_have_adhd,
+            skip_graphify=args.skip_graphify,
             skip_ui_plugins=args.skip_ui_plugins,
             dry_run=args.dry_run,
         )

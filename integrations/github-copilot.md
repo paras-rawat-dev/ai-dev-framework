@@ -67,7 +67,7 @@ Install GitHub CLI 2.90.0 or later, then run from this framework repository:
 python3 scripts/install_framework.py --agent github-copilot
 ```
 
-This merges the personal Copilot CLI instructions, installs the framework skill, and installs the reviewed Ponytail and `i-have-adhd` Agent Skills at user scope. Ponytail's full skill set is installed; ADHD behavior is also embedded in personal and generated project instructions because the third-party skill is opt-in by design.
+This merges the personal Copilot CLI instructions and installs the framework, reviewed Ponytail, `i-have-adhd`, and Graphify skills at user scope. It also installs the pinned Graphify CLI. Ponytail's full skill set is installed; ADHD behavior is embedded in personal and generated project instructions because the third-party skill is opt-in by design.
 
 User-scope skills are local-machine defaults. For GitHub-hosted coding agents, install the same pinned skills into the repository and commit `.agents/skills`:
 
@@ -80,7 +80,7 @@ python3 /path/to/ai-dev-framework/scripts/install_framework.py \
 
 Copilot has no required cross-surface UI plugin in this profile. Use the framework's UI selection guidance and project-owned browser tests rather than claiming Codex or Claude UI plugins are portable.
 
-See [required companion plugins](../docs/companion-plugins.md) for the compatibility matrix.
+See [required framework companions](../docs/companion-plugins.md) for the compatibility matrix.
 
 ## Important Notes
 

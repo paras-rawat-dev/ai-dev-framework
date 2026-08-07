@@ -15,7 +15,7 @@ This repo is documentation-first. Keep changes small, explicit, and easy for a t
 
 - `profiles/default.json` is the reviewed source of truth for required companions and host-specific UI tooling.
 - When asked to install or adopt this framework, run `python3 scripts/install_framework.py --agent <agent>` for the active host.
-- Do not report setup complete when Ponytail, `i-have-adhd`, or a required host capability fails to install.
+- Do not report setup complete when Ponytail, `i-have-adhd`, Graphify, or a required host capability fails to install.
 - Do not claim that native Codex or Claude plugins are portable to another agent. Use the mappings in `docs/companion-plugins.md`.
 
 ## Verification

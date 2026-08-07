@@ -34,6 +34,15 @@ Use a separate agent or independent review pass for:
 - cross-component wiring
 - large UI rewrites
 
+## Repository Intelligence
+
+- Query an existing `graphify-out/graph.json` first for architecture, RCA, migration, onboarding, and cross-component questions; verify important findings against current source.
+- Build or update the graph only when repository breadth justifies the cost. Skip it for trivial or localized edits.
+- Graph output policy: local/generated only; keep `graphify-out/` ignored unless the tech lead approves version control.
+- Remote semantic backends: [disabled, or approved provider and data boundary]
+- Remote execution flag: set `AI_DEV_FRAMEWORK_GRAPHIFY_REMOTE_APPROVED=1` only after that approval; ambient API keys alone do not authorize transmission.
+- Strict hooks: [disabled by default, or approved project exception]
+
 ## Pushback Rules
 
 Agents should push back when:
@@ -52,4 +61,3 @@ Final responses should include:
 - checks run
 - risks or follow-up work
 - any durable rule that should be promoted
-

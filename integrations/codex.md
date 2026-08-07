@@ -53,7 +53,7 @@ Run from this framework repo:
 python3 scripts/install_framework.py --agent codex
 ```
 
-This installs global defaults, the `ai-dev-framework` skill, custom agents, Ponytail and `i-have-adhd` through framework-managed pinned marketplaces, and the Browser, Visualize, and Sites UI capability plugins. See [docs/codex-default-setup.md](../docs/codex-default-setup.md) and [required companion plugins](../docs/companion-plugins.md).
+This installs global defaults, the `ai-dev-framework` skill, custom agents, Ponytail and `i-have-adhd` through framework-managed pinned marketplaces, the pinned Graphify CLI and Codex skill, and the Browser, Visualize, and Sites UI capability plugins. See [docs/codex-default-setup.md](../docs/codex-default-setup.md) and [required framework companions](../docs/companion-plugins.md).
 
 ## Project Bootstrap
 

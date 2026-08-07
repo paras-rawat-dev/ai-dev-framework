@@ -65,6 +65,7 @@ For non-trivial work, use this loop:
 ```text
 read current project instructions
 understand affected flow
+use or build a repository graph only when breadth justifies it
 challenge unnecessary scope
 plan smallest useful slice
 implement
@@ -85,4 +86,3 @@ When a repeated issue appears, promote it to the narrowest durable layer:
 | Organization-wide risk | `enterprise/` |
 
 Do not promote one-off fixes into broad policy.
-

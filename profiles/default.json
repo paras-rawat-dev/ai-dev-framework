@@ -1,6 +1,6 @@
 {
-  "schemaVersion": 1,
-  "reviewedAt": "2026-08-04",
+  "schemaVersion": 2,
+  "reviewedAt": "2026-08-07",
   "companions": {
     "ponytail": {
       "required": true,
@@ -38,6 +38,44 @@
       "copilotSkills": [
         "i-have-adhd"
       ]
+    }
+  },
+  "tools": {
+    "graphify": {
+      "required": true,
+      "repository": "Graphify-Labs/graphify",
+      "gitUrl": "https://github.com/Graphify-Labs/graphify.git",
+      "ref": "v0.9.32",
+      "commit": "00efd6e7969837ae4a9f11d8d504dcd3b20b09df",
+      "version": "0.9.32",
+      "package": "graphifyy",
+      "minimumPython": [3, 10],
+      "supportedOperatingSystems": ["darwin", "linux"],
+      "dependencyPolicy": "root-pinned-transitives-resolved-at-install",
+      "remoteApprovalEnv": "AI_DEV_FRAMEWORK_GRAPHIFY_REMOTE_APPROVED",
+      "license": "Apache-2.0",
+      "commands": ["graphify", "graphify-mcp"],
+      "platforms": {
+        "codex": "codex",
+        "claude": "claude",
+        "github-copilot": "copilot",
+        "agent-skills": "agents"
+      },
+      "projectPlatforms": {
+        "github-copilot": "agents"
+      },
+      "skillPaths": {
+        "codex": ".agents/skills/graphify/SKILL.md",
+        "claude": ".claude/skills/graphify/SKILL.md",
+        "copilot": ".copilot/skills/graphify/SKILL.md",
+        "agents": ".agents/skills/graphify/SKILL.md"
+      },
+      "upstreamSkillPaths": {
+        "codex": ".codex/skills/graphify/SKILL.md",
+        "claude": ".claude/skills/graphify/SKILL.md",
+        "copilot": ".copilot/skills/graphify/SKILL.md",
+        "agents": ".agents/skills/graphify/SKILL.md"
+      }
     }
   },
   "uiPlugins": {

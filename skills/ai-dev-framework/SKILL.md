@@ -23,7 +23,7 @@ If that path does not exist, use the checked-in framework files in the current r
 
 When asked to install, adopt, or configure this framework, read `profiles/default.json` and run the matching `scripts/install_framework.py --agent <agent>` command. Setup is incomplete if a required companion fails to install.
 
-Do not reinstall companions on every coding task. If Ponytail, `i-have-adhd`, or the host's mapped UI capability pack is missing, state the gap and use the safest native fallback until setup is repaired. Agent Skills are portable; native plugin hooks and tools are not.
+Do not reinstall companions on every coding task. If Ponytail, `i-have-adhd`, Graphify, or the host's mapped UI capability pack is missing, state the gap and use the safest native fallback until setup is repaired. Agent Skills are portable; native plugin hooks and tools are not.
 
 ## Core Model
 
@@ -63,6 +63,12 @@ For non-trivial changes:
 Use Ponytail-style restraint: understand first, then prefer no code, existing code, standard library, native platform feature, installed dependency, one-line fix, and only then new code.
 
 Never simplify away security, accessibility, data handling, root-cause analysis, or required verification.
+
+## Graphify Rule
+
+Use an existing `graphify-out/graph.json` as an index for architecture, RCA, migrations, onboarding, and cross-component questions, then verify important conclusions against current source. Build or update a graph only when repository breadth justifies it; skip graph generation for trivial or localized edits.
+
+Keep strict hooks and remote semantic backends disabled unless project rules explicitly approve them. Ambient provider credentials are not approval; remote use also requires `AI_DEV_FRAMEWORK_GRAPHIFY_REMOTE_APPROVED=1`. Treat generated graphs as derived project data and keep `graphify-out/` ignored unless the project explicitly approves version control.
 
 ## Independent Analysis
 

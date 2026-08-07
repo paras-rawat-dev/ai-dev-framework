@@ -88,6 +88,7 @@ Project guidance should answer:
 - What data sources are used?
 - What commands prove the work?
 - When should independent agent review be used?
+- When should Graphify be used, and may its source-derived output be retained or sent to a remote backend?
 
 ## Personal Authoring
 
@@ -128,4 +129,3 @@ Every new guidance file should be:
 - owned by a person or group
 - linked from the relevant index or template
 - tested once in a small task or review scenario
-

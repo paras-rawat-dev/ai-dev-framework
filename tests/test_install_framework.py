@@ -78,7 +78,7 @@ class CrossAgentInstallTests(unittest.TestCase):
             self.assertTrue((home / ".claude" / ".i-have-adhd-always").exists())
             self.assertTrue((home / ".claude" / "skills" / "ai-dev-framework" / "SKILL.md").exists())
 
-        self.assertEqual(len(calls), 8)
+        self.assertEqual(len(calls), 9)
         self.assertEqual(calls[-2:], [
             ["claude", "plugin", "install", plugin, "--scope", "user"]
             for plugin in install_framework.PROFILE["uiPlugins"]["claude"]
@@ -103,6 +103,7 @@ class CrossAgentInstallTests(unittest.TestCase):
                 home,
                 runner,
                 skip_ponytail=True,
+                skip_graphify=True,
                 skip_ui_plugins=True,
             )
 
@@ -169,13 +170,14 @@ class CrossAgentInstallTests(unittest.TestCase):
             len(companion["copilotSkills"])
             for companion in install_framework.PROFILE["companions"].values()
         )
-        self.assertEqual(len(calls), 1 + expected_skills)
+        self.assertEqual(len(calls), 2 + expected_skills)
         self.assertEqual(calls[0], ["gh", "skill", "--help"])
-        self.assertTrue(all("--pin" in cmd for cmd in calls[1:]))
+        skill_calls = [cmd for cmd in calls if cmd[:3] == ["gh", "skill", "install"]]
+        self.assertTrue(all("--pin" in cmd for cmd in skill_calls))
         reviewed_commits = {
             companion["commit"] for companion in install_framework.PROFILE["companions"].values()
         }
-        self.assertTrue(all(cmd[cmd.index("--pin") + 1] in reviewed_commits for cmd in calls[1:]))
+        self.assertTrue(all(cmd[cmd.index("--pin") + 1] in reviewed_commits for cmd in skill_calls))
 
     def test_copilot_project_scope_installs_repo_visible_skills(self) -> None:
         calls: list[list[str]] = []
@@ -197,9 +199,38 @@ class CrossAgentInstallTests(unittest.TestCase):
             self.assertTrue(installed)
             self.assertTrue((target / ".agents" / "skills" / "ai-dev-framework" / "SKILL.md").exists())
             self.assertTrue((target / ".github" / "copilot-instructions.md").exists())
+            self.assertIn("graphify-out/", (target / ".gitignore").read_text(encoding="utf-8"))
 
         skill_dir = str((target / ".agents" / "skills").resolve())
-        self.assertTrue(all(cmd[cmd.index("--dir") + 1] == skill_dir for cmd in calls[1:]))
+        skill_calls = [cmd for cmd in calls if cmd[:3] == ["gh", "skill", "install"]]
+        self.assertTrue(all(cmd[cmd.index("--dir") + 1] == skill_dir for cmd in skill_calls))
+
+    def test_graphify_install_command_is_part_of_each_host_setup(self) -> None:
+        calls: list[list[str]] = []
+
+        def runner(cmd: list[str]) -> tuple[int, str]:
+            calls.append(cmd)
+            return 0, "ok"
+
+        with tempfile.TemporaryDirectory() as tmp, patch.object(
+            install_framework.shutil, "which", return_value="/usr/local/bin/claude"
+        ), patch.object(
+            install_framework,
+            "prepare_claude_marketplace",
+            return_value=Path(tmp) / "reviewed",
+        ), redirect_stdout(io.StringIO()):
+            installed = install_framework.install_claude(
+                Path(tmp),
+                runner,
+                skip_ponytail=True,
+                skip_i_have_adhd=True,
+                skip_ui_plugins=True,
+            )
+
+        self.assertTrue(installed)
+        graphify_call = calls[0]
+        self.assertIn("install_graphify.py", graphify_call[1])
+        self.assertEqual(graphify_call[2:4], ["--platform", "claude"])
 
     def test_dry_run_does_not_write_home(self) -> None:
         with tempfile.TemporaryDirectory() as tmp, redirect_stdout(io.StringIO()):

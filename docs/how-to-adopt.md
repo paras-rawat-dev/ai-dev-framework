@@ -30,7 +30,7 @@ Every new project should create:
 
 Do this before major implementation starts.
 
-Each developer should also run the agent-specific setup command from [required companion plugins](companion-plugins.md). This installs the framework, Ponytail, `i-have-adhd`, and the host's reviewed UI capability pack where one exists.
+Each developer should also run the agent-specific setup command from [required framework companions](companion-plugins.md). This installs the framework, Ponytail, `i-have-adhd`, Graphify, and the host's reviewed UI capability pack where one exists.
 
 ## Pass 4: Keep The Loop Alive
 

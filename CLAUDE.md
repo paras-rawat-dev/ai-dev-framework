@@ -9,6 +9,6 @@ For teams adopting this framework in Claude Code:
 - Put repeated workflows in `.claude/skills/<skill-name>/SKILL.md`.
 - Keep personal preferences in `~/.claude/CLAUDE.md`.
 - Use hooks only for mechanical enforcement, not static project facts.
-- When configuring this framework, run `python3 scripts/install_framework.py --agent claude`; do not report setup complete if a required companion fails.
+- When configuring this framework, run `python3 scripts/install_framework.py --agent claude`; do not report setup complete if Ponytail, `i-have-adhd`, Graphify, or a required host capability fails.
 
 See [integrations/claude.md](integrations/claude.md) for the full adoption guide.

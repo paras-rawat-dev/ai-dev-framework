@@ -6,6 +6,7 @@ import datetime as dt
 import json
 import shutil
 import subprocess
+import sys
 from pathlib import Path
 
 
@@ -124,6 +125,24 @@ def install_i_have_adhd() -> bool:
     return install_pinned_plugin(I_HAVE_ADHD, "i-have-adhd")
 
 
+def install_graphify() -> bool:
+    command = [
+        sys.executable,
+        str(ROOT / "scripts" / "install_graphify.py"),
+        "--platform",
+        "codex",
+        "--home",
+        str(Path.home()),
+    ]
+    code, output = run(command)
+    if output:
+        print(output)
+    if code != 0:
+        print("warning: could not install the reviewed Graphify CLI and Codex skill")
+        return False
+    return True
+
+
 def installed_plugin_revision(companion: dict[str, object]) -> str | None:
     marketplace = str(companion["codexMarketplace"])
     version = str(companion["version"])
@@ -219,6 +238,7 @@ def main() -> int:
     parser = argparse.ArgumentParser(description="Install the AI development framework into local Codex defaults.")
     parser.add_argument("--skip-ponytail", action="store_true", help="Do not try to install the Ponytail Codex plugin.")
     parser.add_argument("--skip-i-have-adhd", action="store_true", help="Do not install the i-have-adhd output-style plugin.")
+    parser.add_argument("--skip-graphify", action="store_true", help="Do not install the reviewed Graphify CLI and skill.")
     parser.add_argument("--skip-ui-plugins", action="store_true", help="Do not install the default Codex UI capability plugins.")
     args = parser.parse_args()
 
@@ -232,6 +252,9 @@ def main() -> int:
             plugins_ok = False
     if not args.skip_i_have_adhd:
         if not install_i_have_adhd():
+            plugins_ok = False
+    if not args.skip_graphify:
+        if not install_graphify():
             plugins_ok = False
     if not args.skip_ui_plugins:
         if not install_ui_plugins():

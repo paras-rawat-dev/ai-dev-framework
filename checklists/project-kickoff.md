@@ -9,6 +9,6 @@
 - [ ] Build/test/lint commands are known.
 - [ ] Performance and reliability targets are defined or marked unknown.
 - [ ] AI workflow expectations are written.
+- [ ] Graphify use, output retention, remote-backend, and refresh decisions are recorded in `AI_WORKFLOW.md`.
 - [ ] Required independent review areas are named.
 - [ ] Agent instruction files are installed for the tools the team uses.
-

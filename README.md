@@ -29,7 +29,7 @@ python3 scripts/install_framework.py --agent claude
 python3 scripts/install_framework.py --agent github-copilot
 ```
 
-Run only the command for the agent being configured. See [required companion plugins](docs/companion-plugins.md) for portability, reviewed pins, UI tooling, and skip controls.
+Run only the command for the agent being configured. See [required framework companions](docs/companion-plugins.md) for portability, reviewed pins, UI tooling, and skip controls. Graphify is installed globally but used conditionally; see [Graphify in the framework](docs/graphify.md).
 
 8. To bootstrap docs in a project, run:
 
@@ -51,7 +51,7 @@ stacks/       Tech-lead-owned stack packs such as Python/FastAPI or React/Vite.
 projects/     Templates created when a new repo or product starts.
 personal/     Personal instruction templates for individual working style.
 integrations/ How to install the same ideas in Codex, Claude, and Copilot.
-profiles/     Reviewed companion-plugin sources, revisions, and host mappings.
+profiles/     Reviewed companion and tool sources, revisions, and host mappings.
 companions/   Host-specific pinned marketplace overlays for third-party companions.
 checklists/   Reusable review, RCA, project kickoff, and UI-selection checklists.
 poc/          Tiny baseline-vs-framework proof of concept.
@@ -97,7 +97,7 @@ codex plugin add ai-dev-framework@ai-dev-framework
 
 Those two marketplace commands install only the framework plugin. Use the Quick Start host command to apply required companions and UI tooling.
 
-The framework skill is portable. Plugin packaging, hooks, browser tooling, and install commands remain agent-specific. The cross-agent setup script installs Ponytail and `i-have-adhd` by default and installs the reviewed UI capability pack available for the selected host.
+The framework skill is portable. Plugin packaging, hooks, browser tooling, and install commands remain agent-specific. The cross-agent setup script installs Ponytail, `i-have-adhd`, the pinned Graphify CLI and host skill, and the reviewed UI capability pack available for the selected host.
 
 ## Core Rule
 

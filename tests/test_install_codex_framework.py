@@ -155,6 +155,7 @@ class PluginInstallTests(unittest.TestCase):
                     "install_codex_framework.py",
                     "--skip-ponytail",
                     "--skip-i-have-adhd",
+                    "--skip-graphify",
                     "--skip-ui-plugins",
                 ],
             ),
@@ -164,6 +165,7 @@ class PluginInstallTests(unittest.TestCase):
             patch.object(install_codex_framework, "ensure_config"),
             patch.object(install_codex_framework, "install_ponytail") as install_ponytail,
             patch.object(install_codex_framework, "install_i_have_adhd") as install_i_have_adhd,
+            patch.object(install_codex_framework, "install_graphify") as install_graphify,
             patch.object(install_codex_framework, "install_ui_plugins") as install_ui_plugins,
             redirect_stdout(io.StringIO()),
         ):
@@ -172,6 +174,7 @@ class PluginInstallTests(unittest.TestCase):
         self.assertEqual(result, 0)
         install_ponytail.assert_not_called()
         install_i_have_adhd.assert_not_called()
+        install_graphify.assert_not_called()
         install_ui_plugins.assert_not_called()
 
     def test_plugin_failure_makes_main_fail(self) -> None:
@@ -179,7 +182,12 @@ class PluginInstallTests(unittest.TestCase):
             patch.object(
                 sys,
                 "argv",
-                ["install_codex_framework.py", "--skip-ponytail", "--skip-ui-plugins"],
+                [
+                    "install_codex_framework.py",
+                    "--skip-ponytail",
+                    "--skip-graphify",
+                    "--skip-ui-plugins",
+                ],
             ),
             patch.object(install_codex_framework, "install_global_agents"),
             patch.object(install_codex_framework, "install_skill"),
@@ -191,6 +199,16 @@ class PluginInstallTests(unittest.TestCase):
             result = install_codex_framework.main()
 
         self.assertEqual(result, 1)
+
+    @patch.object(install_codex_framework, "run")
+    def test_graphify_failure_is_reported_as_incomplete_setup(self, run) -> None:
+        run.return_value = (1, "network unavailable")
+
+        with redirect_stdout(io.StringIO()):
+            installed = install_codex_framework.install_graphify()
+
+        self.assertFalse(installed)
+        self.assertIn("install_graphify.py", run.call_args.args[0][1])
 
 
 if __name__ == "__main__":

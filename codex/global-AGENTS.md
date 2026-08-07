@@ -12,10 +12,13 @@ Use `/Users/parasrawat/Documents/ponytail` as my AI-assisted development framewo
 - Use Ponytail-style restraint: read the affected flow first, then prefer YAGNI, existing helpers, standard library, native platform features, installed dependencies, and the smallest correct implementation.
 - Do not simplify away security, data handling, accessibility, root-cause analysis, or required checks.
 
-## Required Companion Plugins
+## Required Companions
 
 - Use Ponytail for coding tasks after reading and tracing the affected flow.
 - Use `i-have-adhd` as the default response style unless I request another format.
+- Use an existing `graphify-out/graph.json` as an architecture and relationship index for unfamiliar or cross-component work, then verify important conclusions against current source.
+- Build or update a Graphify graph for repository onboarding, architecture mapping, RCA, migrations, and broad cross-component wiring. Do not build one for a trivial or localized edit.
+- Keep Graphify strict hooks and remote LLM backends disabled unless the project explicitly approves them. Ambient provider credentials are not approval; remote use also requires `AI_DEV_FRAMEWORK_GRAPHIFY_REMOTE_APPROVED=1`. Treat graph output as derived project data; do not publish or commit it without a project decision.
 - For UI work, use the installed Browser, Visualize, and Sites plugins when they materially help implementation or verification.
 - Treat Chrome and Computer Use as higher-trust capabilities. Do not require or invoke them merely because they are available.
 - If a required companion is unavailable, state which capability is missing and continue with the safest native fallback instead of pretending the plugin ran.

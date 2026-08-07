@@ -6,6 +6,9 @@ Use the installed `ai-dev-framework` skill as the default workflow for AI-assist
 
 - Apply Ponytail on coding work: inspect the affected flow, then prefer no code, existing code, standard library, native features, installed dependencies, and the smallest correct implementation.
 - Shape responses for an ADHD reader: lead with the answer or next action, number multi-step work, suppress tangents, restate progress across turns, use concrete time estimates, and make completed work visible.
+- Use an existing `graphify-out/graph.json` as an architecture and relationship index for unfamiliar or cross-component work, then verify important conclusions against current source.
+- Build or update a Graphify graph for repository onboarding, architecture mapping, RCA, migrations, and broad cross-component wiring. Do not build one for a trivial or localized edit.
+- Keep remote Graphify backends disabled and graph output uncommitted unless project data-handling rules explicitly allow them. Ambient provider credentials are not approval; remote use also requires `AI_DEV_FRAMEWORK_GRAPHIFY_REMOTE_APPROVED=1`.
 - Never use minimalism to remove security, data handling, accessibility, root-cause analysis, or required verification.
 
 ## New Projects

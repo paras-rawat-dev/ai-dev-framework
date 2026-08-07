@@ -14,6 +14,7 @@ This installs:
 - recommended `[agents]` config if missing
 - pinned framework-managed Ponytail marketplace and plugin
 - pinned framework-managed `i-have-adhd` marketplace and plugin for action-first output
+- pinned Graphify CLI in an isolated environment plus its native Codex skill
 - Browser, Visualize, and Sites UI capability plugins
 
 The installer exits non-zero if a companion plugin cannot be installed, while keeping the framework files it installed successfully.
@@ -31,6 +32,7 @@ Codex should now treat the framework as default behavior:
 - push back on scope, dependencies, missing checks, weak UI choices, and bad assumptions
 - use Ponytail-style restraint
 - use ADHD-friendly, action-first output by default
+- use Graphify selectively for architecture, RCA, migrations, onboarding, and cross-component work
 - use independent analysis for RCA, migrations, security/data risks, and cross-component wiring
 
 ## If Ponytail Installation Fails
@@ -54,3 +56,13 @@ codex plugin add i-have-adhd@ai-dev-framework-i-have-adhd
 ```
 
 The installer verifies the plugin against the reviewed commit in [profiles/default.json](../profiles/default.json). The plugin includes a SessionStart hook; review it and follow Codex's trust prompt rather than bypassing hook approval. The global framework instructions still request ADHD-friendly output when the hook is unavailable.
+
+## If Graphify Installation Fails
+
+Confirm Python 3.10 or later and Git are available, then repair only Graphify:
+
+```bash
+python3 scripts/install_graphify.py --platform codex
+```
+
+The installer will not modify the system Python or overwrite an unrelated `~/.local/bin/graphify` command. See [Graphify in the framework](graphify.md) for the use and data-handling policy.

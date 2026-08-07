@@ -30,6 +30,17 @@ def write_if_missing(src: Path, dst: Path, force: bool) -> str:
     return f"wrote {dst}"
 
 
+def ensure_gitignore_entry(path: Path, entry: str) -> str:
+    existing = path.read_text(encoding="utf-8") if path.exists() else ""
+    if entry in {line.strip() for line in existing.splitlines()}:
+        return f"kept {path}"
+    updated = existing.rstrip()
+    if updated:
+        updated += "\n"
+    path.write_text(updated + entry + "\n", encoding="utf-8")
+    return f"updated {path}"
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(description="Bootstrap framework project docs into a target repository.")
     parser.add_argument("target", nargs="?", default=".", help="Target project root")
@@ -45,14 +56,17 @@ def main() -> int:
     for name, src in TOOL_FILES.items():
         print(write_if_missing(src, target / name, args.force))
 
+    print(ensure_gitignore_entry(target / ".gitignore", "graphify-out/"))
+
     agents = target / "AGENTS.md"
     if not agents.exists() or args.force:
         agents.write_text(
             "# Project Agent Instructions\n\n"
             "Read PROJECT_CHARTER.md, ARCHITECTURE.md, TESTING.md, and AI_WORKFLOW.md before non-trivial changes.\n\n"
-            "Use the installed ai-dev-framework, Ponytail, and i-have-adhd companions. Report a missing companion instead of pretending it ran.\n\n"
+            "Use the installed ai-dev-framework, Ponytail, i-have-adhd, and Graphify companions. Report a missing companion instead of pretending it ran.\n\n"
             "Follow selected stack packs and UI member choices from PROJECT_CHARTER.md.\n"
-            "Challenge scope creep, unnecessary dependencies, missing verification, and UI-library drift.\n",
+            "Challenge scope creep, unnecessary dependencies, missing verification, and UI-library drift.\n"
+            "Use Graphify for justified architecture, RCA, migration, onboarding, or cross-component work; verify graph findings against source.\n",
             encoding="utf-8",
         )
         print(f"wrote {agents}")

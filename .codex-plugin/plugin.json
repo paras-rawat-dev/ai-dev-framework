@@ -1,6 +1,6 @@
 {
   "name": "ai-dev-framework",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "AI-assisted development framework for enterprise, project, and personal coding-agent standards.",
   "author": {
     "name": "Paras Rawat",
@@ -14,7 +14,7 @@
   "interface": {
     "displayName": "AI Dev Framework",
     "shortDescription": "Enterprise/project/personal workflow for AI-assisted coding",
-    "longDescription": "Guides coding agents to create project charters, choose stack packs and UI members, push back on bad assumptions, use Ponytail-style restraint, and verify non-trivial changes.",
+    "longDescription": "Guides coding agents to create project charters, choose stack packs and UI members, push back on bad assumptions, use Ponytail-style restraint, apply pinned Graphify repository intelligence selectively, and verify non-trivial changes.",
     "developerName": "Paras Rawat",
     "category": "Productivity",
     "capabilities": ["Instructions", "Skills"],
@@ -27,4 +27,3 @@
     "brandColor": "#1f6feb"
   }
 }
-

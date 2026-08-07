@@ -64,9 +64,9 @@ Run from this framework repository:
 python3 scripts/install_framework.py --agent claude
 ```
 
-This safely merges the global Claude defaults, installs the framework skill, installs pinned Ponytail and `i-have-adhd` plugins, enables the ADHD SessionStart behavior, and installs Frontend Design and Playwright from Claude's official marketplace.
+This safely merges the global Claude defaults, installs the framework skill, installs pinned Ponytail and `i-have-adhd` plugins, enables the ADHD SessionStart behavior, installs the pinned Graphify CLI and Claude skill, and installs Frontend Design and Playwright from Claude's official marketplace.
 
-See [required companion plugins](../docs/companion-plugins.md) for reviewed revisions and UI-tool boundaries.
+See [required framework companions](../docs/companion-plugins.md) for reviewed revisions and UI-tool boundaries.
 
 ## Suggested Project `CLAUDE.md`
 

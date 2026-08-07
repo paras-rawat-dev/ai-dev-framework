@@ -25,7 +25,7 @@ python3 scripts/install_framework.py --agent claude
 python3 scripts/install_framework.py --agent github-copilot
 ```
 
-The command installs the framework, Ponytail, `i-have-adhd`, and the reviewed UI capability pack available for that host. Treat a failed required companion as an incomplete setup.
+The command installs the framework, Ponytail, `i-have-adhd`, Graphify, and the reviewed UI capability pack available for that host. Treat a failed required companion as an incomplete setup.
 
 ## Start A New Project
 
